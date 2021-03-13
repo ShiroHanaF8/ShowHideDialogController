@@ -13,7 +13,12 @@ class CMFCApplication1Dlg : public CDialogEx
 // コンストラクション
 public:
 	CMFCApplication1Dlg(CWnd* pParent = nullptr);	// 標準コンストラクター
-
+	~CMFCApplication1Dlg(){
+		if (m_modelessDlg != nullptr)
+		{
+			delete m_modelessDlg;
+		}
+	}
 // ダイアログ データ
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_MFCAPPLICATION1_DIALOG };
@@ -27,7 +32,7 @@ public:
 protected:
 	HICON m_hIcon;
 
-	ModelessDialog *m_modelessDlg;
+	ModelessDialog *m_modelessDlg = nullptr;
 
 	// 生成された、メッセージ割り当て関数
 	virtual BOOL OnInitDialog();

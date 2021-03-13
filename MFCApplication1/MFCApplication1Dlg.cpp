@@ -18,7 +18,9 @@
 
 // CMFCApplication1Dlg ダイアログ
 
-
+// Exception test
+//#define NO_ALLOC
+//#define DELETED
 
 CMFCApplication1Dlg::CMFCApplication1Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFCAPPLICATION1_DIALOG, pParent)
@@ -50,8 +52,9 @@ BOOL CMFCApplication1Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 大きいアイコンの設定
 	SetIcon(m_hIcon, FALSE);		// 小さいアイコンの設定
 
-	m_modelessDlg = new ModelessDialog(this);
-
+#ifndef NO_ALLOC
+	m_modelessDlg = new ModelessDialog(this);// 未確保にしてみるテスト
+#endif
 
 	return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
 }
@@ -112,7 +115,9 @@ void CMFCApplication1Dlg::OnBnClickedButton1()
 
 void CMFCApplication1Dlg::OnBnClickedButton2()
 {
-	//delete m_modelessDlg; // 解放してみるテスト
+#ifdef DELETED
+	delete m_modelessDlg; // 解放してみるテスト
+#endif
 	ShowHideDialogController shc((CWnd*)m_modelessDlg);
 	ModalDialog dlg(this);
 	dlg.DoModal();
